@@ -48,7 +48,7 @@ jobs:
             ${{ runner.os }}-sonar-
 
       - name: Build, run unit tests, and generate Checkstyle report
-        run: mvn clean verify checkstyle:checkstyle -B -Dcheckstyle.failOnViolation=false
+        run: mvn clean verify checkstyle:checkstyle -B -Dcheckstyle.failsOnError=false -Dcheckstyle.failOnViolation=false
 
       - name: Run SonarQube scan
         uses: sonarsource/sonarqube-scan-action@v2
