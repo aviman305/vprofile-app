@@ -40,12 +40,9 @@ mvn clean package -DskipTests
 mvn test
 ```
 
-## Project Structure
+## Contributing
 
-```
-├── src/                  # Application source code
-├── Docker-files/         # Dockerfiles for app, db, and web
-├── .github/workflows/    # GitHub Actions CI/CD pipeline
-├── sonar-project.properties  # SonarQube configuration
-└── pom.xml               # Maven build configuration
-```
+1. Create a feature branch from `main`
+2. Make your changes and push
+3. Raise a Pull Request to `main` — CI will run automatically
+4. Merge once the SonarQube scan passes
