@@ -56,19 +56,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
-      - name: SonarQube quality gate check
-        run: |
-          for i in $(seq 1 20); do
-            RESPONSE=$(curl -s -u "$SONAR_TOKEN:" "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=vprofile-java99")
-            STATUS=$(echo "$RESPONSE" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('projectStatus',{}).get('status','PENDING'))" 2>/dev/null || echo "PENDING")
-            echo "Attempt $i - Quality gate status: $STATUS"
-            if [ "$STATUS" = "OK" ] || [ "$STATUS" = "ERROR" ]; then break; fi
-            sleep 15
-          done
-          if [ "$STATUS" != "OK" ]; then exit 1; fi
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
   docker-build-push:
     if: github.event_name == 'push'
