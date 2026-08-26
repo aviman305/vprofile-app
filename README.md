@@ -18,7 +18,6 @@ A Java-based web application built with Spring Framework, deployed via a GitOps 
 - Build and unit tests via Maven
 - Checkstyle report generation
 - SonarQube code quality scan
-- SonarQube quality gate check
 
 ### On Push to `main`
 - Docker image build and push to Amazon ECR
@@ -39,4 +38,14 @@ mvn clean package -DskipTests
 ### Run tests
 ```bash
 mvn test
+```
+
+## Project Structure
+
+```
+├── src/                  # Application source code
+├── Docker-files/         # Dockerfiles for app, db, and web
+├── .github/workflows/    # GitHub Actions CI/CD pipeline
+├── sonar-project.properties  # SonarQube configuration
+└── pom.xml               # Maven build configuration
 ```
