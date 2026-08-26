@@ -57,12 +57,13 @@ jobs:
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
 
       - name: SonarQube quality gate check
-        uses: sonarsource/sonarqube-quality-gate-action@v1.1.0
+        run: |
+          STATUS=$(curl -s -u "$SONAR_TOKEN:" "$SONAR_HOST_URL/api/qualitygates/project_status?projectKey=vprofile-java99" | python3 -c "import sys,json; print(json.load(sys.stdin)['projectStatus']['status'])")
+          echo "Quality gate status: $STATUS"
+          if [ "$STATUS" != "OK" ]; then exit 1; fi
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
-        with:
-          pollingTimeoutSec: 600
 
   docker-build-push:
     if: github.event_name == 'push'
